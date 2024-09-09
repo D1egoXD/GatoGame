@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 
-class MatrizApp:
-    def _init_(self, root):
+class gato:
+    def __init__(self, root):
         self.root = root
         self.root.title("Matriz 3x3")
         self.matriz = [[None for _ in range(3)] for _ in range(3)]
@@ -64,5 +64,5 @@ class MatrizApp:
 
 # Crear la ventana principal
 root = tk.Tk()
-app = MatrizApp(root)
+app = gato(root)
 root.mainloop()

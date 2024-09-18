@@ -73,6 +73,36 @@
             border-radius: 4px;
             overflow-x: auto;
         }
+        #codigoModal {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            z-index: 1; /* En la parte superior */
+            left: 0;
+            top: 0;
+            width: 100%; /* Ancho completo */
+            height: 100%; /* Alto completo */
+            overflow: auto; /* Habilita el desplazamiento si es necesario */
+            background-color: rgba(0,0,0,0.5); /* Fondo negro con opacidad */
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto; /* 15% desde la parte superior y centrado */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Ancho del modal */
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            cursor: pointer;
+        }
 
     </style>
 </head>
@@ -94,9 +124,111 @@
             <h1>Prueba de ejecucion</h1>
     
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/wC2sS7xGsyE?si=OeBwfAXb5Sk22azu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                <h1>Estructura</h1>
-                <img src="img/estru.webp" width="500" height="500" alt="Integrante 1">
+                <h1>Diagrama de clases UML</h1>
+                <img src="img/e.jpeg" width="400" height="500" alt="Integrante 1">
 
+                <h1>Ver Código completo</h1>
+<button id="mostrarCodigo">Mostrar Código</button>
+
+<div id="codigoModal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Código Python</h2>
+        <pre><code>
+import tkinter as tk
+from tkinter import messagebox
+
+class Gato:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("3 EN RAYA")
+        self.matriz = [[None for _ in range(3)] for _ in range(3)]
+        self.turno = "X"
+        self.crear_botones()
+
+    def crear_botones(self):
+        for i in range(3):
+            for j in range(3):
+                boton = tk.Button(self.root, text='', width=5, height=2,
+                                  command=lambda i=i, j=j: self.cambiar_valor(i, j))
+                boton.grid(row=i, column=j)
+                self.matriz[i][j] = boton
+
+    def cambiar_valor(self, i, j):
+        if self.matriz[i][j]['text'] == '':
+            self.matriz[i][j]['text'] = self.turno
+            if self.verificar_ganador():
+                messagebox.showinfo("¡Ganaste!", f"El jugador {self.turno} ha ganado!")
+                self.resetear()
+            elif self.tablero_lleno():
+                messagebox.showinfo("Empate", "El juego ha terminado en empate.")
+                self.resetear()
+            else:
+                self.turno = 'O' if self.turno == 'X' else 'X'
+
+    def verificar_ganador(self):
+        combinaciones = [
+            [(0, 0), (0, 1), (0, 2)],
+            [(1, 0), (1, 1), (1, 2)],
+            [(2, 0), (2, 1), (2, 2)],
+            [(0, 0), (1, 0), (2, 0)],
+            [(0, 1), (1, 1), (2, 1)],
+            [(0, 2), (1, 2), (2, 2)],
+            [(0, 0), (1, 1), (2, 2)],
+            [(0, 2), (1, 1), (2, 0)]
+        ]
+        for combinacion in combinaciones:
+            if self.matriz[combinacion[0][0]][combinacion[0][1]]['text'] == self.turno and \
+               self.matriz[combinacion[1][0]][combinacion[1][1]]['text'] == self.turno and \
+               self.matriz[combinacion[2][0]][combinacion[2][1]]['text'] == self.turno:
+                return True
+        return False
+
+    def tablero_lleno(self):
+        for fila in self.matriz:
+            for boton in fila:
+                if boton['text'] == '':
+                    return False
+        return True
+
+    def resetear(self):
+        for fila in self.matriz:
+            for boton in fila:
+                boton['text'] = ''
+        self.turno = "X"
+        </code></pre>
+    </div>
+</div>
+
+<script>
+    // Obtener el modal
+    var modal = document.getElementById("codigoModal");
+
+    // Obtener el botón que abre el modal
+    var btn = document.getElementById("mostrarCodigo");
+
+    // Obtener el elemento <span> que cierra el modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // Cuando el usuario hace clic en el botón, abrir el modal 
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // Cuando el usuario hace clic en <span> (x), cerrar el modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Cuando el usuario hace clic en cualquier parte fuera del modal, cerrarlo
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+                
         </div>
     </div>
 

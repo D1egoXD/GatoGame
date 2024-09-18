@@ -4,7 +4,7 @@ from tkinter import messagebox
 class gato:
     def __init__(self, root):
         self.root = root
-        self.root.title("Matriz 3x3")
+        self.root.title("3 EN RAYA")
         self.matriz = [[None for _ in range(3)] for _ in range(3)]
         self.turno = "X"
         
@@ -40,7 +40,7 @@ class gato:
             [(0, 1), (1, 1), (2, 1)],  # Columna 2
             [(0, 2), (1, 2), (2, 2)],  # Columna 3
             [(0, 0), (1, 1), (2, 2)],  # Diagonal
-            [(0, 2), (1, 1), (2, 0)]   # Diagonal inversa
+            [(0, 2), (1, 1), (2, 2)]   # Diagonal inversa
         ]
         for combinacion in combinaciones:
             if self.matriz[combinacion[0][0]][combinacion[0][1]]['text'] == self.turno and \
@@ -49,7 +49,7 @@ class gato:
                 return True
         return False
 
-    def tablero_lleno(self):
+    def tablero_lleno(self): 
         for fila in self.matriz:
             for boton in fila:
                 if boton['text'] == '':

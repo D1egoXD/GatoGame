@@ -243,7 +243,7 @@ class Gato:
 <h3>Clase <code>gato</code></h3>
 <p>Esta clase representa el juego en sí. Contiene la lógica del juego, la interfaz gráfica y el manejo de eventos.</p>
 
-<h4>Método <code> Void __init__(self,tk, root)</code></h4>
+<h4>Método <code> void __init__(self, tk root)</code></h4>
 <ul>
     <li><strong>Descripción:</strong> Constructor de la clase. Inicializa la ventana principal del juego y establece el estado inicial del tablero y el turno del jugador.</li>
     <li><strong>Tipo de retorno:</strong> <code>None</code> (similar a <code>void</code>).</li>
@@ -256,7 +256,7 @@ class Gato:
     </li>
 </ul>
 
-<h4>Método <code>Void crear_botones(self)</code></h4>
+<h4>Método <code>void crear_botones(self)</code></h4>
 <ul>
     <li><strong>Descripción:</strong> Crea una cuadrícula de botones que representan cada celda del tablero. Cada botón está vinculado a un comando que permite al jugador marcar su símbolo en la celda correspondiente.</li>
     <li><strong>Tipo de retorno:</strong> <code>None</code> (similar a <code>void</code>).</li>
@@ -279,7 +279,7 @@ class Gato:
     </li>
 </ul>
 
-<h4>Método <code>verificar_ganador(self)</code></h4>
+<h4>Método <code>bool verificar_ganador(self)</code></h4>
 <ul>
     <li><strong>Descripción:</strong> Comprueba todas las combinaciones posibles para determinar si el jugador actual ha ganado. Retorna <code>True</code> si hay un ganador y <code>False</code> en caso contrario.</li>
     <li><strong>Tipo de retorno:</strong> <code>bool</code>.</li>
@@ -291,8 +291,8 @@ class Gato:
     </li>
 </ul>
 
-<h4>Método <code>Void tablero_lleno(self)</code></h4>
-<ul>
+<h4>Método <code>bool tablero_lleno(self)</code></h4>
+<ul> 
     <li><strong>Descripción:</strong> Verifica si todas las celdas del tablero están ocupadas. Retorna <code>True</code> si el tablero está lleno y <code>False</code> si hay al menos una celda vacía.</li>
     <li><strong>Tipo de retorno:</strong> <code>bool</code>.</li>
     <li><strong>Tipos de datos utilizados:</strong>
@@ -303,7 +303,7 @@ class Gato:
     </li>
 </ul>
 
-<h4>Método <code>Void resetear(self)</code></h4>
+<h4>Método <code>void resetear(self)</code></h4>
 <ul>
     <li><strong>Descripción:</strong> Reinicia el juego limpiando todos los botones y restableciendo el turno al jugador inicial.</li>
     <li><strong>Tipo de retorno:</strong> <code>None</code> (similar a <code>void</code>).</li>

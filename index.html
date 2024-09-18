@@ -235,121 +235,99 @@ class Gato:
     <div class="section">
         <h2>Implementación</h2>
         <img src="img/Tic_tac_toe.svg" width="500" height="500" alt="Implementación del Juego">
-        <h2>Descripción General</h2>
-<p>Esta aplicación es un juego de "X" y "O" (también conocido como tres en raya) implementado en Python utilizando la biblioteca <code>tkinter</code> para la interfaz gráfica. Permite a dos jugadores alternar turnos, mostrando "X" o "O" en una matriz de 3x3. La aplicación también verifica quién gana o si el juego termina en empate.</p>
+<h2>Descripción General</h2>
+<p>El juego "3 en Raya" es una implementación gráfica de un clásico juego de mesa para dos jugadores. Los jugadores alternan turnos para marcar sus símbolos (X y O) en un tablero de 3x3. El objetivo es alinear tres de sus símbolos en una fila, columna o diagonal. La aplicación está construida utilizando la biblioteca Tkinter de Python, que proporciona herramientas para crear interfaces gráficas de usuario (GUI).</p>
 
-<h2>Estructura del Código</h2>
+<h2>Clases y Métodos</h2>
 
-<h3>Importaciones</h3>
-<pre><code>import tkinter as tk
-from tkinter import messagebox</code></pre>
+<h3>Clase <code>gato</code></h3>
+<p>Esta clase representa el juego en sí. Contiene la lógica del juego, la interfaz gráfica y el manejo de eventos.</p>
+
+<h4>Método <code> Void __init__(self,tk, root)</code></h4>
 <ul>
-    <li><code>tkinter</code>: Biblioteca estándar en Python para crear interfaces gráficas.</li>
-    <li><code>messagebox</code>: Módulo de <code>tkinter</code> que permite mostrar cuadros de diálogo.</li>
-</ul>
-
-<h3>Clase <code>MatrizApp</code></h3>
-<p>La clase principal que gestiona la lógica del juego y la interfaz gráfica.</p>
-
-<h4>Método <code>_init_</code></h4>
-<pre><code>def _init_(self, root):
-    self.root = root
-    self.root.title("Matriz 3x3")
-    self.matriz = [[None for _ in range(3)] for _ in range(3)]
-    self.turno = "X"
-    self.crear_botones()</code></pre>
-<ul>
-    <li><strong>Parámetros:</strong>
+    <li><strong>Descripción:</strong> Constructor de la clase. Inicializa la ventana principal del juego y establece el estado inicial del tablero y el turno del jugador.</li>
+    <li><strong>Tipo de retorno:</strong> <code>None</code> (similar a <code>void</code>).</li>
+    <li><strong>Tipos de datos utilizados:</strong>
         <ul>
-            <li><code>root</code>: Ventana principal de la aplicación.</li>
-        </ul>
-    </li>
-    <li><strong>Variables:</strong>
-        <ul>
-            <li><code>self.matriz</code>: Lista de listas que almacena los botones de la matriz.</li>
-            <li><code>self.turno</code>: Variable que indica el turno actual ("X" o "O").</li>
-        </ul>
-    </li>
-    <li><strong>Funcionalidad:</strong> Inicializa la matriz y llama a <code>crear_botones</code> para generar los botones.</li>
-</ul>
-
-<h4>Método <code>crear_botones</code></h4>
-<pre><code>def crear_botones(self):
-    for i in range(3):
-        for j in range(3):
-            boton = tk.Button(self.root, text='', width=5, height=2,
-                              command=lambda i=i, j=j: self.cambiar_valor(i, j))
-            boton.grid(row=i, column=j)
-            self.matriz[i][j] = boton</code></pre>
-<p>Crea 9 botones en una disposición de 3x3. Cada botón está vinculado a la función <code>cambiar_valor</code>, que se llama al hacer clic en el botón.</p>
-
-<h4>Método <code>cambiar_valor</code></h4>
-<pre><code>def cambiar_valor(self, i, j):
-    if self.matriz[i][j]['text'] == '':
-        self.matriz[i][j]['text'] = self.turno
-        if self.verificar_ganador():
-            messagebox.showinfo("¡Ganaste!", f"El jugador {self.turno} ha ganado!")
-            self.resetear()
-        elif self.tablero_lleno():
-            messagebox.showinfo("Empate", "El juego ha terminado en empate.")
-            self.resetear()
-        else:
-            self.turno = 'O' if self.turno == 'X' else 'X'</code></pre>
-<ul>
-    <li><strong>Funcionalidad:</strong>
-        <ul>
-            <li>Cambia el texto del botón presionado a "X" o "O".</li>
-            <li>Verifica si hay un ganador o si el tablero está lleno.</li>
-            <li>Muestra un mensaje correspondiente y reinicia el juego si hay un ganador o un empate.</li>
+            <li><code>root</code>: <code>tk.Tk</code> (objeto de la ventana principal).</li>
+            <li><code>matriz</code>: <code>list</code> de <code>list</code> (matriz 3x3 que contiene objetos <code>Button</code>).</li>
+            <li><code>turno</code>: <code>str</code> (indica el símbolo del jugador actual, "X" o "O").</li>
         </ul>
     </li>
 </ul>
 
-<h4>Método <code>verificar_ganador</code></h4>
-<pre><code>def verificar_ganador(self):
-    combinaciones = [
-        [(0, 0), (0, 1), (0, 2)],  # Fila 1
-        [(1, 0), (1, 1), (1, 2)],  # Fila 2
-        [(2, 0), (2, 1), (2, 2)],  # Fila 3
-        [(0, 0), (1, 0), (2, 0)],  # Columna 1
-        [(0, 1), (1, 1), (2, 1)],  # Columna 2
-        [(0, 2), (1, 2), (2, 2)],  # Columna 3
-        [(0, 0), (1, 1), (2, 2)],  # Diagonal
-        [(0, 2), (1, 1), (2, 0)]   # Diagonal inversa
-    ]
-    for combinacion in combinaciones:
-        if self.matriz[combinacion[0][0]][combinacion[0][1]]['text'] == self.turno and \
-           self.matriz[combinacion[1][0]][combinacion[1][1]]['text'] == self.turno and \
-           self.matriz[combinacion[2][0]][combinacion[2][1]]['text'] == self.turno:
-            return True
-    return False</code></pre>
-<p><strong>Funcionalidad:</strong> Comprueba todas las combinaciones posibles de victoria (filas, columnas y diagonales). <strong>Retorno:</strong> Devuelve <code>True</code> si el jugador actual ha ganado, de lo contrario, devuelve <code>False</code>.</p>
-
-<h4>Método <code>tablero_lleno</code></h4>
-<pre><code>def tablero_lleno(self):
-    for fila in self.matriz:
-        for boton in fila:
-            if boton['text'] == '':
-                return False
-    return True</code></pre>
-<p><strong>Funcionalidad:</strong> Verifica si todos los botones de la matriz están llenos. <strong>Retorno:</strong> Devuelve <code>True</code> si el tablero está lleno, de lo contrario, devuelve <code>False</code>.</p>
-
-<h4>Método <code>resetear</code></h4>
-<pre><code>def resetear(self):
-    for fila in self.matriz:
-        for boton in fila:
-            boton['text'] = ''
-    self.turno = "X"</code></pre>
-<p><strong>Funcionalidad:</strong> Reinicia la matriz a su estado inicial (vacío) y restablece el turno a "X".</p>
-
-<h3>Ejecutar la Aplicación</h3>
-<pre><code>root = tk.Tk()
-app = MatrizApp(root)
-root.mainloop()</code></pre>
-<p><strong>Descripción:</strong>
+<h4>Método <code>Void crear_botones(self)</code></h4>
 <ul>
-    <li>Se crea la ventana principal de la aplicación.</li>
-    <li>Se inicia el bucle principal que mantiene la aplicación en funcionamiento y espera interacciones del usuario.</li>
+    <li><strong>Descripción:</strong> Crea una cuadrícula de botones que representan cada celda del tablero. Cada botón está vinculado a un comando que permite al jugador marcar su símbolo en la celda correspondiente.</li>
+    <li><strong>Tipo de retorno:</strong> <code>None</code> (similar a <code>void</code>).</li>
+    <li><strong>Tipos de datos utilizados:</strong>
+        <ul>
+            <li><code>i</code>, <code>j</code>: <code>int</code> (índices de fila y columna para la matriz).</li>
+            <li><code>boton</code>: <code>tk.Button</code> (objeto botón creado para la celda).</li>
+        </ul>
+    </li>
+</ul>
+
+<h4>Método <code>cambiar_valor(self, i, j)</code></h4>
+<ul>
+    <li><strong>Descripción:</strong> Cambia el valor del botón en la posición (i, j) con el símbolo del jugador actual. Verifica si hay un ganador o si el tablero está lleno después de cada movimiento.</li>
+    <li><strong>Tipo de retorno:</strong> <code>None</code> (similar a <code>void</code>).</li>
+    <li><strong>Tipos de datos utilizados:</strong>
+        <ul>
+            <li><code>i</code>, <code>j</code>: <code>int</code> (índices de fila y columna para la matriz).</li>
+        </ul>
+    </li>
+</ul>
+
+<h4>Método <code> Void verificar_ganador(self)</code></h4>
+<ul>
+    <li><strong>Descripción:</strong> Comprueba todas las combinaciones posibles para determinar si el jugador actual ha ganado. Retorna <code>True</code> si hay un ganador y <code>False</code> en caso contrario.</li>
+    <li><strong>Tipo de retorno:</strong> <code>bool</code>.</li>
+    <li><strong>Tipos de datos utilizados:</strong>
+        <ul>
+            <li><code>combinaciones</code>: <code>list</code> de <code>list</code> (lista de combinaciones ganadoras).</li>
+            <li><code>combinacion</code>: <code>tuple</code> (cada combinación a verificar).</li>
+        </ul>
+    </li>
+</ul>
+
+<h4>Método <code>Void tablero_lleno(self)</code></h4>
+<ul>
+    <li><strong>Descripción:</strong> Verifica si todas las celdas del tablero están ocupadas. Retorna <code>True</code> si el tablero está lleno y <code>False</code> si hay al menos una celda vacía.</li>
+    <li><strong>Tipo de retorno:</strong> <code>bool</code>.</li>
+    <li><strong>Tipos de datos utilizados:</strong>
+        <ul>
+            <li><code>fila</code>: <code>list</code> (cada fila de la matriz).</li>
+            <li><code>boton</code>: <code>tk.Button</code> (cada botón en la fila).</li>
+        </ul>
+    </li>
+</ul>
+
+<h4>Método <code>Void resetear(self)</code></h4>
+<ul>
+    <li><strong>Descripción:</strong> Reinicia el juego limpiando todos los botones y restableciendo el turno al jugador inicial.</li>
+    <li><strong>Tipo de retorno:</strong> <code>None</code> (similar a <code>void</code>).</li>
+    <li><strong>Tipos de datos utilizados:</strong>
+        <ul>
+            <li><code>fila</code>: <code>list</code> (cada fila de la matriz).</li>
+            <li><code>boton</code>: <code>tk.Button</code> (cada botón en la fila).</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>Funcionamiento del Juego</h2>
+<ol>
+    <li>Al iniciar la aplicación, se crea una ventana con un tablero de 3x3, donde cada celda está representada por un botón.</li>
+    <li>Los jugadores alternan turnos haciendo clic en las celdas vacías.</li>
+    <li>Después de cada movimiento, el juego verifica si un jugador ha ganado o si el juego ha terminado en empate.</li>
+    <li>Si hay un ganador o el juego termina en empate, se muestra un mensaje y el tablero se reinicia para jugar de nuevo.</li>
+</ol>
+
+<h2>Consideraciones</h2>
+<ul>
+    <li>La lógica del juego asegura que no se puedan realizar movimientos en celdas ya ocupadas.</li>
+    <li>El uso de <code>messagebox</code> permite mostrar información relevante al jugador de manera amigable.</li>
+    <li>El diseño del juego es simple y accesible, lo que lo hace adecuado para jugadores de todas las edades.</li>
 </ul>
 </p>
     </div>
